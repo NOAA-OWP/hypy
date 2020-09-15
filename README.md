@@ -14,8 +14,10 @@ Other things to include:
 Unit testing done with [pytest](https://github.com/pytest-dev/pytest).  See [requirements.txt](requirements.txt) for other specific python dependencies.
 
 ## Installation
+Package can be installed from source using pip:
+`pip install -e "git+git://github.com/noaa-owp/hypy@master#egg=hypy&subdirectory=python"`
 
-`TODO` [INSTALL](INSTALL.md).
+`TODO` see [INSTALL](INSTALL.md).
 
 ## Usage
 
