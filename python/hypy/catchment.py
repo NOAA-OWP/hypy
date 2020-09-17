@@ -1,4 +1,5 @@
 import pandas as pd
+from .formulation import Formulation
 from .nexus import Nexus
 from .realization import Realization
 from typing import List, Optional, Tuple, Union
@@ -7,6 +8,18 @@ from typing import List, Optional, Tuple, Union
 class Catchment:
     """
     Implementation of the HY Features Catchment concept.
+
+    The type is designed to expect that the majority of its properties are effectively immutable (though since it's
+    Python, not actually) after object initialization.  I.e., most properties should have their values passed in when
+    an object is created.  However, there are a few exceptions explained below.
+
+    The following properties are designed as potentially mutable after initialization:
+        - ::attribute:`formulation`
+        - ::attribute:`realization`
+
+    These are implemented with ``@property`` methods so that the getter/setter can be overridden in subtypes if behavior
+    needs to be customized.  It is also expected that once these have been set, they may be changed, but they will not
+    be unset (i.e., set back to ``None``).
     """
     #Slots are the attributes of the class (instance variables)
     #A more efficient way of implementing them compared to __dict__
