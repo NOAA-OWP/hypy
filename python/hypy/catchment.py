@@ -59,7 +59,7 @@ class Catchment:
     #A more efficient way of implementing them compared to __dict__
     #Used here since potentially MANY Catchment objects may exist in a single application
     __slots__ = ["_id", "_forcing", "_formulation", "_inflow", "_outflow", "_contained_catchments",
-                 "_containing_catchment", "_realization"]
+                 "_containing_catchment", "_realization", "_conjoined_catchments"]
 
     def __init__(self,
                  catchment_id: str,
@@ -68,6 +68,7 @@ class Catchment:
                  outflow: Optional[Nexus] = None,
                  contained_catchments: Catchments_Collection = tuple(),
                  containing_catchment: Optional['Catchment'] = None,
+                 conjoined_catchments: Catchments_Collection = tuple(),
                  formulation: Optional[Formulation] = None,
                  realization: Optional[Realization] = None):
         """
@@ -87,10 +88,12 @@ class Catchment:
             A collection of nested catchments having an "is-in" relationship with this catchment.
         containing_catchment: Optional['Catchment']
             An optional catchment that contains this one.
-        realization: Optional[Realization]
-            The optional catchment realization object associated with this catchment.
+        conjoined_catchments: Catchments_Collection
+            A collection of conjoined catchments related to this catchment.
         formulation: Optional[Formulation]
             The optional modeling formulation object associated with this catchment.
+        realization: Optional[Realization]
+            The optional catchment realization object associated with this catchment.
         """
         self._id = catchment_id
         self._forcing = pd.read_csv(params['forcing']['path'])
@@ -98,9 +101,20 @@ class Catchment:
         self._outflow = outflow
         self._contained_catchments = self._convert_collection_to_tuple(contained_catchments)
         self._containing_catchment = containing_catchment
+        self._conjoined_catchments = self._convert_collection_to_tuple(conjoined_catchments)
         self._formulation = formulation
         self._realization = realization
-        # TODO: not sure exactly how to implement conjoined_catchment property
+
+    @property
+    def conjoined_catchments(self) -> Tuple['Catchment']:
+        """
+
+        Returns
+        -------
+        Tuple['Catchment']
+            Tuple of catchment objects in a conjoined relationship with this object.
+        """
+        return self._conjoined_catchments
 
     @property
     def contained_catchments(self) -> Tuple['Catchment']:
