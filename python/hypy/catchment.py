@@ -4,6 +4,8 @@ from .nexus import Nexus
 from .realization import Realization
 from typing import List, Optional, Tuple, Union
 
+Catchments_Collection = Union['Catchment', List['Catchment'], Tuple['Catchment']]
+
 
 class Catchment:
     """
