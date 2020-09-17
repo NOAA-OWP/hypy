@@ -10,6 +10,7 @@ from hypy import Catchment
 """
 _current_dir = Path(__file__).resolve().parent
 
+
 @pytest.fixture
 def catchment() -> Generator[Catchment, None, None]:
     """
@@ -22,19 +23,21 @@ def catchment() -> Generator[Catchment, None, None]:
     forcing_path = Path(data['catchments']['cat-88']['forcing']['path'])
     forcing_path = data_path.joinpath('forcing').joinpath(forcing_path.name)
 
-    params = {'forcing': {'path':forcing_path}}
+    params = {'forcing': {'path': forcing_path}}
     yield Catchment('cat-test', params)
+
 
 @pytest.fixture
 def hymod_formulation() -> Generator[Catchment, None, None]:
     """
         Test a mock hymod catchment definition
     """
-    id = 'cat-hymod'
+    catchment_id = 'cat-hymod'
     params = {'sr': [1.0, 1.0, 1.0], 'storage': 1.0, 'max_storage': 1000.0,
               'a': 1.0, 'b': 10.0, 'Ks': 0.1, 'Kq': 0.01, 'n': 3, 't': 0}
 
-    yield Catchment(id, params)
+    yield Catchment(catchment_id, params)
+
 
 def test_catchment(catchment: Catchment) -> None:
     """
