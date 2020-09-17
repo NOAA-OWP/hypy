@@ -78,6 +78,17 @@ class Catchment:
         return self._containing_catchment
 
     @property
+    def forcing(self) -> pd.Series:
+        """Return the forcing data for this catchment
+
+            Returns
+            -------
+                pandas.Series
+                    Series of precipitation volume for the catchment indexed by time
+        """
+        return self._forcing
+
+    @property
     def id(self) -> str:
         """Return catchment identifier
 
@@ -126,17 +137,6 @@ class Catchment:
             Out-flowing connected Nexus.
         """
         return self._outflow
-
-    @property
-    def forcing(self) -> pd.Series:
-        """Return the forcing data for this catchment
-
-            Returns
-            -------
-                pandas.Series
-                    Series of precipitation volume for the catchment indexed by time
-        """
-        return self._forcing
 
     @property
     def upper_catchments(self) -> Tuple['Catchment']:
