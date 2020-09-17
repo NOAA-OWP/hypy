@@ -28,6 +28,33 @@ class Catchment:
         - ::attribute:`lower_catchments` (provided via ::attribute:`outflow)
         - ::attribute:`upper_catchments` (provided via ::attribute:`inflow)
     """
+
+    @classmethod
+    def _convert_collection_to_tuple(cls, collection: Catchments_Collection) -> Tuple['Catchment']:
+        """
+        Convenience method to accept a ``Catchments_Collection``, which is a union of several possible types, and to
+        output a tuple of catchments (or an empty tuple).
+
+        Parameters
+        ----------
+        collection: Catchments_Collection
+            A collection of catchment objects, which could be objects within certain containers, an empty container, or
+            a single catchment object itself.
+
+        Returns
+        -------
+        Tuple['Catchment']
+            A tuple containing the catchments included directly or in the container parameter object.
+        """
+        if isinstance(collection, list):
+            return tuple(collection)
+        elif isinstance(collection, tuple):
+            return collection
+        # Assuming type hinting is followed, the only thing this should leave is the single catchment
+        # TODO: consider whether any cases outside of type hint need to be addressed
+        else:
+            return (collection,)
+
     #Slots are the attributes of the class (instance variables)
     #A more efficient way of implementing them compared to __dict__
     #Used here since potentially MANY Catchment objects may exist in a single application
