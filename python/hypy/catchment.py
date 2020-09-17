@@ -66,7 +66,7 @@ class Catchment:
                  params: dict,
                  inflow: Optional[Nexus] = None,
                  outflow: Optional[Nexus] = None,
-                 contained_catchments: Union['Catchment', List['Catchment'], Tuple['Catchment']] = tuple(),
+                 contained_catchments: Catchments_Collection = tuple(),
                  containing_catchment: Optional['Catchment'] = None,
                  formulation: Optional[Formulation] = None,
                  realization: Optional[Realization] = None):
@@ -83,7 +83,7 @@ class Catchment:
             The inflow/input Nexus for the catchment, or ``None`` if it does not have one.
         outflow: Nexus
             The outflow/output Nexus for the catchment, or ``None`` if it does not have one.
-        contained_catchments: Union['Catchment', List['Catchment'], Tuple['Catchment']]
+        contained_catchments: Catchments_Collection
             A collection of nested catchments having an "is-in" relationship with this catchment.
         containing_catchment: Optional['Catchment']
             An optional catchment that contains this one.
@@ -96,12 +96,7 @@ class Catchment:
         self._forcing = pd.read_csv(params['forcing']['path'])
         self._inflow = inflow
         self._outflow = outflow
-        if isinstance(contained_catchments, list):
-            self._contained_catchments = tuple(contained_catchments)
-        elif isinstance(contained_catchments, tuple):
-            self._contained_catchments = contained_catchments
-        else:
-            self._contained_catchments = (contained_catchments,)
+        self._contained_catchments = self._convert_collection_to_tuple(contained_catchments)
         self._containing_catchment = containing_catchment
         self._formulation = formulation
         self._realization = realization
