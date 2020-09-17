@@ -12,7 +12,7 @@ class Catchment:
     #A more efficient way of implementing them compared to __dict__
     #Used here since potentially MANY Catchment objects may exist in a single application
     __slots__ = ["_id", "_forcing", "_formulation", "_inflow", "_outflow", "_contained_catchments",
-                 "_containing_catchment", "realization"]
+                 "_containing_catchment", "_realization"]
 
     def __init__(self,
                  catchment_id: str,
@@ -20,7 +20,9 @@ class Catchment:
                  inflow: Optional[Nexus] = None,
                  outflow: Optional[Nexus] = None,
                  contained_catchments: Union['Catchment', List['Catchment'], Tuple['Catchment']] = tuple(),
-                 containing_catchment: Optional['Catchment'] = None):
+                 containing_catchment: Optional['Catchment'] = None,
+                 formulation: Optional[Formulation] = None,
+                 realization: Optional[Realization] = None):
         """
         Set the catchment identity and transform the raw params into dataframes.
 
@@ -38,6 +40,10 @@ class Catchment:
             A collection of nested catchments having an "is-in" relationship with this catchment.
         containing_catchment: Optional['Catchment']
             An optional catchment that contains this one.
+        realization: Optional[Realization]
+            The optional catchment realization object associated with this catchment.
+        formulation: Optional[Formulation]
+            The optional modeling formulation object associated with this catchment.
         """
         self._id = catchment_id
         self._forcing = pd.read_csv(params['forcing']['path'])
@@ -50,7 +56,8 @@ class Catchment:
         else:
             self._contained_catchments = (contained_catchments,)
         self._containing_catchment = containing_catchment
-        self.realization: Optional[Realization] = None
+        self._formulation = formulation
+        self._realization = realization
         # TODO: not sure exactly how to implement conjoined_catchment property
 
     @property
@@ -76,6 +83,22 @@ class Catchment:
             The catchment with which this catchment has an "is-in" relationship, or ``None`` if there is not one.
         """
         return self._containing_catchment
+
+    @property
+    def formulation(self) -> Optional[Formulation]:
+        """
+        The optional ::class:`Formulation` for this catchment.
+
+        Returns
+        -------
+        Optional[Formulation]
+            The ::class:`Formulation` for this catchment, or ``None`` if it has not been set.
+        """
+        return self._formulation
+
+    @formulation.setter
+    def formulation(self, formulation: Formulation):
+        self._formulation = formulation
 
     @property
     def forcing(self) -> pd.Series:
@@ -137,6 +160,22 @@ class Catchment:
             Out-flowing connected Nexus.
         """
         return self._outflow
+
+    @property
+    def realization(self) -> Optional[Realization]:
+        """
+        The optional ::class:`Realization` for this catchment.
+
+        Returns
+        -------
+        Optional[Realization]
+            The ::class:`Realization` for this catchment, or ``None`` if it has not been set.
+        """
+        return self._realization
+
+    @realization.setter
+    def realization(self, realization: Realization):
+        self._realization = realization
 
     @property
     def upper_catchments(self) -> Tuple['Catchment']:
