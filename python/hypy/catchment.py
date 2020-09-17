@@ -9,9 +9,9 @@ class Catchment:
     """
     Implementation of the HY Features Catchment concept.
 
-    The type is designed to expect that the majority of its properties are effectively immutable (though since it's
-    Python, not actually) after object initialization.  I.e., most properties should have their values passed in when
-    an object is created.  However, there are a few exceptions explained below.
+    The type is designed to expect that many of its properties are effectively immutable (though since it's Python, not
+    actually) after object initialization.  I.e., most properties should have their values passed in when an object is
+    created.  There are a few exceptions explained below, but this should be the default expectation.
 
     The following properties are designed as potentially mutable after initialization:
         - ::attribute:`formulation`
@@ -20,6 +20,11 @@ class Catchment:
     These are implemented with ``@property`` methods so that the getter/setter can be overridden in subtypes if behavior
     needs to be customized.  It is also expected that once these have been set, they may be changed, but they will not
     be unset (i.e., set back to ``None``).
+
+    Further, the following properties are transitive, with ``@property`` getters provided for convenience.  As such,
+    they cannot be set directly, and their mutability is subject to the implementation of other types:
+        - ::attribute:`lower_catchments` (provided via ::attribute:`outflow)
+        - ::attribute:`upper_catchments` (provided via ::attribute:`inflow)
     """
     #Slots are the attributes of the class (instance variables)
     #A more efficient way of implementing them compared to __dict__
