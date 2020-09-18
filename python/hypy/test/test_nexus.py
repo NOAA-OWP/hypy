@@ -25,10 +25,7 @@ def nexus():
     data_file = data_path.joinpath('example_realization_config.json')
     with open(data_file) as fp:
         data = json.load(fp)
-    forcing_path = Path(data['catchments']['cat-88']['forcing']['path'])
-    forcing_path = data_path.joinpath('forcing').joinpath(forcing_path.name)
-
-    params = {'forcing': {'path': forcing_path}}
+    params = {}
 
     receiving_catchments = (Catchment(catchment_id_receiving0, params), Catchment(catchment_id_receiving1, params)) #tuple
 
