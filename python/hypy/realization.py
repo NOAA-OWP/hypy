@@ -7,7 +7,7 @@ class Realization(object):
     """
 
     """
-    __slots__ = ['_id', '_forcing']
+    __slots__ = ['_id']
     def __init__(self, id):
         """
 
@@ -25,14 +25,3 @@ class Realization(object):
                 realization identifier
         """
         return self._id
-
-    @property
-    def forcing(self) -> 'Series':
-        """Return the forcing data for this catchment
-
-            Returns
-            -------
-                pandas.Series
-                    Series of precipitation volume for the catchment indexed by time
-        """
-        return self._forcing
