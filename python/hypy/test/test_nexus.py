@@ -1,22 +1,45 @@
 import pytest
-from typing import Generator
-from pathlib import Path
 import json
-
+from pathlib import Path
+from hypy import Catchment
 from hypy import Nexus, Observation_Point
 
 """
     Test suite for Nexus class
 """
 
+_current_dir = Path(__file__).resolve().parent
+
 @pytest.fixture
 def nexus():
     """
         Nexus object to test
     """
-    id = 'nex-test'
-    to_id = 'downstream_catchment'
-    nexus = Nexus(id, to_id)
+    nexus_id = 'nex-test'
+
+    catchment_id_receiving0 = 'cat-hymod-receive0'
+    catchment_id_receiving1 = 'cat-hymod-receive1'
+    catchment_id_contributing0 = 'cat-hymod-contribute0'
+    catchment_id_contributing1 = 'cat-hymod-contribute1'
+    data_path = _current_dir.joinpath('data')
+    data_file = data_path.joinpath('example_realization_config.json')
+    with open(data_file) as fp:
+        data = json.load(fp)
+    forcing_path = Path(data['catchments']['cat-88']['forcing']['path'])
+    forcing_path = data_path.joinpath('forcing').joinpath(forcing_path.name)
+
+    params = {'forcing': {'path': forcing_path}}
+
+    receiving_catchments = (Catchment(catchment_id_receiving0, params), Catchment(catchment_id_receiving1, params)) #tuple
+
+    contributing_catchments = [Catchment(catchment_id_contributing0, params), Catchment(catchment_id_contributing1, params)] #list
+
+    nexus = Nexus(nexus_id, None, receiving_catchments, contributing_catchments)
+    receiving_catchments[0]._inflow = nexus
+    receiving_catchments[1]._inflow = nexus
+    contributing_catchments[0]._outflow = nexus
+    contributing_catchments[1]._outflow = nexus
+
     yield nexus
 
 @pytest.fixture
@@ -24,9 +47,9 @@ def observation_point():
     """
         Observation_Point object to test
     """
-    id = 'obs-point-test'
-    to_id = 'downstream_catchment'
-    observation_point = Observation_Point(id, to_id)
+    obs_point_id = 'obs-point-test'
+
+    observation_point = Observation_Point(obs_point_id, None)
     yield observation_point
 
 def test_nexus(nexus):
@@ -35,13 +58,13 @@ def test_nexus(nexus):
     """
     assert nexus.id == 'nex-test'
 
-    assert nexus.to_id == 'downstream_catchment'
+    assert nexus.receiving_catchments[0].id == 'cat-hymod-receive0'
+
+    assert nexus.contributing_catchments[1].id == 'cat-hymod-contribute1'
 
 def test_observation_point(observation_point):
     """
         Test proper construction of observation_point
     """
     assert observation_point.id == 'obs-point-test'
-
-    assert observation_point.to_id == 'downstream_catchment'
 
