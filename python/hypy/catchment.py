@@ -58,7 +58,7 @@ class Catchment:
     #Slots are the attributes of the class (instance variables)
     #A more efficient way of implementing them compared to __dict__
     #Used here since potentially MANY Catchment objects may exist in a single application
-    __slots__ = ["_id", "_forcing", "_formulation", "_inflow", "_outflow", "_contained_catchments",
+    __slots__ = ["_id", "_formulation", "_inflow", "_outflow", "_contained_catchments",
                  "_containing_catchment", "_realization", "_conjoined_catchments"]
 
     def __init__(self,
@@ -96,7 +96,6 @@ class Catchment:
             The optional catchment realization object associated with this catchment.
         """
         self._id = catchment_id
-        self._forcing = pd.read_csv(params['forcing']['path'])
         self._inflow = inflow
         self._outflow = outflow
         self._contained_catchments = self._convert_collection_to_tuple(contained_catchments)
@@ -155,17 +154,6 @@ class Catchment:
     @formulation.setter
     def formulation(self, formulation: Formulation):
         self._formulation = formulation
-
-    @property
-    def forcing(self) -> pd.Series:
-        """Return the forcing data for this catchment
-
-            Returns
-            -------
-                pandas.Series
-                    Series of precipitation volume for the catchment indexed by time
-        """
-        return self._forcing
 
     @property
     def id(self) -> str:
