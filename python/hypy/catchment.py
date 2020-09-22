@@ -58,8 +58,8 @@ class Catchment:
     #Slots are the attributes of the class (instance variables)
     #A more efficient way of implementing them compared to __dict__
     #Used here since potentially MANY Catchment objects may exist in a single application
-    __slots__ = ["_id", "_formulation", "_inflow", "_outflow", "_contained_catchments",
-                 "_containing_catchment", "_realization", "_conjoined_catchments"]
+    __slots__ = ["_id", "_inflow", "_outflow", "_contained_catchments", "_containing_catchment",
+                 "_realization", "_conjoined_catchments"]
 
     def __init__(self,
                  catchment_id: str,
@@ -69,7 +69,6 @@ class Catchment:
                  contained_catchments: Catchments_Collection = tuple(),
                  containing_catchment: Optional['Catchment'] = None,
                  conjoined_catchments: Catchments_Collection = tuple(),
-                 formulation: Optional[Formulation] = None,
                  realization: Optional[Realization] = None):
         """
         Set the catchment identity and transform the raw params into dataframes.
@@ -90,8 +89,6 @@ class Catchment:
             An optional catchment that contains this one.
         conjoined_catchments: Catchments_Collection
             A collection of conjoined catchments related to this catchment.
-        formulation: Optional[Formulation]
-            The optional modeling formulation object associated with this catchment.
         realization: Optional[Realization]
             The optional catchment realization object associated with this catchment.
         """
@@ -101,7 +98,6 @@ class Catchment:
         self._contained_catchments = self._convert_collection_to_tuple(contained_catchments)
         self._containing_catchment = containing_catchment
         self._conjoined_catchments = self._convert_collection_to_tuple(conjoined_catchments)
-        self._formulation = formulation
         self._realization = realization
 
     @property
@@ -138,22 +134,6 @@ class Catchment:
             The catchment with which this catchment has an "is-in" relationship, or ``None`` if there is not one.
         """
         return self._containing_catchment
-
-    @property
-    def formulation(self) -> Optional[Formulation]:
-        """
-        The optional ::class:`Formulation` for this catchment.
-
-        Returns
-        -------
-        Optional[Formulation]
-            The ::class:`Formulation` for this catchment, or ``None`` if it has not been set.
-        """
-        return self._formulation
-
-    @formulation.setter
-    def formulation(self, formulation: Formulation):
-        self._formulation = formulation
 
     @property
     def id(self) -> str:
@@ -235,3 +215,77 @@ class Catchment:
         """
         # TODO: reconcile this with Nexus class once finished.
         return self.inflow.contributing_catchments
+
+
+class FormulatableCatchment(Catchment):
+    """
+    A subtype of ::class:`Catchment` extended to support a ::attribute:`formulation` property for encapsulating model
+    formulation logic.
+
+    As with the supertype, this type is designed to expect that many of its properties are effectively immutable (though
+    since it's Python, not actually) after object initialization.  However, the ::attribute:`formulation` property is
+    an exception to this.  See documentation for ::class:`Catchment` for more thorough explanation of the implications
+    of this.
+    """
+
+    __slots__ = ["_formulation"]
+
+    def __init__(self,
+                 catchment_id: str,
+                 params: dict,
+                 inflow: Optional[Nexus] = None,
+                 outflow: Optional[Nexus] = None,
+                 contained_catchments: Catchments_Collection = tuple(),
+                 containing_catchment: Optional['Catchment'] = None,
+                 conjoined_catchments: Catchments_Collection = tuple(),
+                 formulation: Optional[Formulation] = None,
+                 realization: Optional[Realization] = None):
+        """
+        Set the catchment identity and transform the raw params into dataframes.
+
+        Parameters
+        ----------
+        catchment_id: str
+            The identifier string for this catchment.
+        params: dict
+            Dictionary of params for directly and indirectly configuring the catchment.
+        inflow: Nexus
+            The inflow/input Nexus for the catchment, or ``None`` if it does not have one.
+        outflow: Nexus
+            The outflow/output Nexus for the catchment, or ``None`` if it does not have one.
+        contained_catchments: Catchments_Collection
+            A collection of nested catchments having an "is-in" relationship with this catchment.
+        containing_catchment: Optional['Catchment']
+            An optional catchment that contains this one.
+        conjoined_catchments: Catchments_Collection
+            A collection of conjoined catchments related to this catchment.
+        formulation: Optional[Formulation]
+            The optional modeling formulation object associated with this catchment.
+        realization: Optional[Realization]
+            The optional catchment realization object associated with this catchment.
+        """
+        super().__init__(catchment_id=catchment_id, params=params, inflow=inflow, outflow=outflow,
+                         contained_catchments=contained_catchments, containing_catchment=containing_catchment,
+                         conjoined_catchments=conjoined_catchments, realization=realization)
+        self._formulation = formulation
+        if self._formulation is not None:
+            self._formulation.catchment = self
+
+    @property
+    def formulation(self) -> Optional[Formulation]:
+        """
+        The optional ::class:`Formulation` for this catchment.
+
+        Returns
+        -------
+        Optional[Formulation]
+            The ::class:`Formulation` for this catchment, or ``None`` if it has not been set.
+        """
+        return self._formulation
+
+    @formulation.setter
+    def formulation(self, formulation: Formulation):
+        self._formulation = formulation
+
+
+
