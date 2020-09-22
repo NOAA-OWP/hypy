@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 from typing import Dict, Optional, Type, TYPE_CHECKING
 
+if TYPE_CHECKING:
+    from .catchment import FormulatableCatchment
 
 
 class Formulation(ABC):
@@ -110,3 +112,25 @@ class Formulation(ABC):
         ::method:`get_required_params_for_type`
         """
         pass
+
+
+class CatchmentFormulation(Formulation, ABC):
+    """
+    An abstract extension specifically representing a formulatable catchment's formulation.
+    """
+
+    __slots__ = ['_catchment']
+
+    def __init__(self, formulation_id: str, catchment: Optional['FormulatableCatchment']):
+        super().__init__(formulation_id=formulation_id)
+        self._catchment = catchment
+        if self._catchment is not None:
+            self._catchment.formulation = self
+
+    @property
+    def catchment(self) -> Optional['FormulatableCatchment']:
+        return self._catchment
+
+    @catchment.setter
+    def catchment(self, catchment: 'FormulatableCatchment'):
+        self._catchment = catchment
