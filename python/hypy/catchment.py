@@ -1,5 +1,5 @@
 import pandas as pd
-from .formulation import Formulation
+from .formulation import CatchmentFormulation
 from .nexus import Nexus
 from .realization import Realization
 from typing import List, Optional, Tuple, Union
@@ -238,7 +238,7 @@ class FormulatableCatchment(Catchment):
                  contained_catchments: Catchments_Collection = tuple(),
                  containing_catchment: Optional['Catchment'] = None,
                  conjoined_catchments: Catchments_Collection = tuple(),
-                 formulation: Optional[Formulation] = None,
+                 formulation: Optional[CatchmentFormulation] = None,
                  realization: Optional[Realization] = None):
         """
         Set the catchment identity and transform the raw params into dataframes.
@@ -259,7 +259,7 @@ class FormulatableCatchment(Catchment):
             An optional catchment that contains this one.
         conjoined_catchments: Catchments_Collection
             A collection of conjoined catchments related to this catchment.
-        formulation: Optional[Formulation]
+        formulation: Optional[CatchmentFormulation]
             The optional modeling formulation object associated with this catchment.
         realization: Optional[Realization]
             The optional catchment realization object associated with this catchment.
@@ -272,19 +272,19 @@ class FormulatableCatchment(Catchment):
             self._formulation.catchment = self
 
     @property
-    def formulation(self) -> Optional[Formulation]:
+    def formulation(self) -> Optional[CatchmentFormulation]:
         """
-        The optional ::class:`Formulation` for this catchment.
+        The optional ::class:`CatchmentFormulation` for this catchment.
 
         Returns
         -------
-        Optional[Formulation]
-            The ::class:`Formulation` for this catchment, or ``None`` if it has not been set.
+        Optional[CatchmentFormulation]
+            The ::class:`CatchmentFormulation` for this catchment, or ``None`` if it has not been set.
         """
         return self._formulation
 
     @formulation.setter
-    def formulation(self, formulation: Formulation):
+    def formulation(self, formulation: CatchmentFormulation):
         self._formulation = formulation
 
 
