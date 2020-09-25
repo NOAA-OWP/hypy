@@ -89,10 +89,3 @@ class Nexus():
             Tuple of Catchment object(s) contributing water to nexus
         """
         return self._contributing_catchments 
-
-class Observation_Point(Nexus):
-    """
-    Subclass of Nexus to define a hydrological observation point that could connect to a data source
-    from a USGS gaging station as an example.
-    """
-    pass

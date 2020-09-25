@@ -2,7 +2,7 @@ import pytest
 import json
 from pathlib import Path
 from hypy import Catchment
-from hypy import Nexus, Observation_Point
+from hypy import Nexus, HydroLocation, HydroLocationType
 
 """
     Test suite for Nexus class
@@ -31,23 +31,18 @@ def nexus():
 
     contributing_catchments = [Catchment(catchment_id_contributing0, params), Catchment(catchment_id_contributing1, params)] #list
 
-    nexus = Nexus(nexus_id, None, receiving_catchments, contributing_catchments)
+    location = HydroLocation(nexus_id,
+                            (0,0),
+                            HydroLocationType.UNDEFINED,
+                            None)
+
+    nexus = Nexus(nexus_id, location, receiving_catchments, contributing_catchments)
     receiving_catchments[0]._inflow = nexus
     receiving_catchments[1]._inflow = nexus
     contributing_catchments[0]._outflow = nexus
     contributing_catchments[1]._outflow = nexus
 
     yield nexus
-
-@pytest.fixture
-def observation_point():
-    """
-        Observation_Point object to test
-    """
-    obs_point_id = 'obs-point-test'
-
-    observation_point = Observation_Point(obs_point_id, None)
-    yield observation_point
 
 def test_nexus(nexus):
     """
@@ -58,10 +53,3 @@ def test_nexus(nexus):
     assert nexus.receiving_catchments[0].id == 'cat-hymod-receive0'
 
     assert nexus.contributing_catchments[1].id == 'cat-hymod-contribute1'
-
-def test_observation_point(observation_point):
-    """
-        Test proper construction of observation_point
-    """
-    assert observation_point.id == 'obs-point-test'
-
