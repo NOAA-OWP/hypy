@@ -19,6 +19,16 @@ class NWISLocation(HydroLocation):
                 ):
         """
 
+        Parameters
+        ----------
+        shape: Union[Point, Tuple]
+            a shapely point geometry or two-tuple defining the coordinates of this location
+        station_id: str
+            NWIS station identifier 
+        referenced_position:
+            position expressed as measured or otherwise described distance from a known, already located referent
+        realized_nexus: str
+            the nexus identifier associated with this location
         """
         super().__init__(realized_nexus, shape, HydroLocationType.hydrometricStation, referenced_position)
         self._station_id = station_id
