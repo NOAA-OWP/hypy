@@ -1,5 +1,5 @@
 from typing import Union, Tuple, TYPE_CHECKING
-from evaluation_tools import nwis_client
+from hydrotools import nwis_client
 
 from hypy.hydrolocation import HydroLocation, HydroLocationType
 
