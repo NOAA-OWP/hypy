@@ -1,5 +1,5 @@
 pytest
 flake8
 pandas
-git+https://github.com/noaa-owp/evaluation_tools@master#egg=evaluation-tools-nwis_client&subdirectory=python/nwis_client
-git+https://github.com/noaa-owp/evaluation_tools@master#egg=evaluation-tools-_restclientt&subdirectory=python/_restclient
+git+https://github.com/noaa-owp/hydrotools#egg=hydrotools-nwis_client&subdirectory=python/nwis_client
+git+https://github.com/noaa-owp/hydrotools#egg=hydrotools-_restclientt&subdirectory=python/_restclient
