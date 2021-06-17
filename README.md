@@ -45,9 +45,6 @@ flake8 ./python --count --exit-zero --max-complexity=10 --max-line-length=127 --
 ```
 
 ## Known issues
-The nwis_location.py requires a dependency that currently is only available from a private repository.  For members of the NOAA-OWP organization who have correctly configured ssh keys and/or auth tokens configured, the dependency should install correctly.
-
-Also, due to a bug in the nwis_client setup.py, an additional dependency (_restclient) is required to be explicitly installed.
 
 ## Getting help
 
