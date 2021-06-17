@@ -23,6 +23,6 @@ setup(
     author_email='',
     url='https://github.com/noaa-owp/hypy',
     license='',
-    install_requires=['pandas'],
+    install_requires=['pandas', 'hydrotools.nwis-client'],
     packages=find_namespace_packages(exclude=('test', 'src'))
 )
