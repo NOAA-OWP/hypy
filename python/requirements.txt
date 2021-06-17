@@ -1,5 +1,4 @@
 pytest
 flake8
 pandas
-git+https://github.com/NOAA-OWP/hydrotools#egg=hydrotools-nwis_client&subdirectory=python/nwis_client
-git+https://github.com/NOAA-OWP/hydrotools#egg=hydrotools-_restclient&subdirectory=python/_restclient
+hydrotools.nwis-client
