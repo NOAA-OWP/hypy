@@ -32,7 +32,7 @@ class NWISLocation(HydroLocation):
         """
         super().__init__(realized_nexus, shape, HydroLocationType.hydrometricStation, referenced_position)
         self._station_id = station_id
-        self._nwis = nwis_client.IVDataService()
+        #self._nwis = nwis_client.IVDataService()
     @property
     def station_id(self) -> str:
         """
@@ -47,4 +47,4 @@ class NWISLocation(HydroLocation):
         """
             Get observation data from nwis
         """
-        return self._nwis.get(self._station_id, startDT=start, endDT=end)
+        return nwis_client.IVDataService().get(self._station_id, startDT=start, endDT=end)
