@@ -15,7 +15,7 @@ Unit testing done with [pytest](https://github.com/pytest-dev/pytest).  See [req
 
 ## Installation
 Package can be installed from source using pip:
-`pip install -e "git+git://github.com/noaa-owp/hypy@master#egg=hypy&subdirectory=python"`
+`pip install -e "git+https://github.com/noaa-owp/hypy@master#egg=hypy&subdirectory=python"`
 
 `TODO` see [INSTALL](INSTALL.md).
 
