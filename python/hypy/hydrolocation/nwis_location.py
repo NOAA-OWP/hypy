@@ -7,6 +7,7 @@ if TYPE_CHECKING:
     from pandas import DataFrame, Timestamp
     from numpy import datetime64
     from datetime import datetime
+    from shapely.geometry import Point
 class NWISLocation(HydroLocation):
     """
         An NWIS subclass of HydroLocation
