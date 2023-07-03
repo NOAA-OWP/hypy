@@ -9,7 +9,7 @@ class Nexus():
     """
 
     @classmethod
-    def _convert_collection_to_tuple(cls, collection: 'Catchments_Collection') -> Tuple['Catchment']:
+    def _convert_collection_to_tuple(cls, collection: 'Catchments_Collection') -> Tuple['Catchment', ...]:
         """
         Convenience method to accept a ``Catchments_Collection``, which is a union of several possible types, and to
         output a tuple of catchments (or an empty tuple).
@@ -20,7 +20,7 @@ class Nexus():
             a single catchment object itself.
         Returns
         -------
-        Tuple['Catchment']
+        Tuple['Catchment', ...]
             A tuple containing the catchments included directly or in the container parameter object.
         """
         if isinstance(collection, list):
@@ -69,23 +69,23 @@ class Nexus():
         return self._id
 
     @property
-    def receiving_catchments (self) -> Tuple['Catchment']:
+    def receiving_catchments (self) -> Tuple['Catchment', ...]:
         """Tuple of Catchment object(s) receiving water from nexus
 
         Returns
         -------
-        Tuple['Catchment']
+        Tuple['Catchment', ...]
             Tuple of Catchment object(s) receiving water from nexus 
         """
         return self._receiving_catchments 
 
     @property
-    def contributing_catchments (self) -> Tuple['Catchment']:
+    def contributing_catchments (self) -> Tuple['Catchment', ...]:
         """Tuple of Catchment object(s) contributing water to nexus
 
         Returns
         -------
-        Tuple['Catchment']
+        Tuple['Catchment', ...]
             Tuple of Catchment object(s) contributing water to nexus
         """
         return self._contributing_catchments 
