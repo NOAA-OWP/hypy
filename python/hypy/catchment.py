@@ -4,7 +4,7 @@ from .nexus import Nexus
 from .realization import Realization
 from typing import List, Optional, Tuple, Union
 
-Catchments_Collection = Union['Catchment', List['Catchment'], Tuple['Catchment']]
+Catchments_Collection = Union['Catchment', List['Catchment'], Tuple['Catchment', ...]]
 
 
 class Catchment:
@@ -30,7 +30,7 @@ class Catchment:
     """
 
     @classmethod
-    def _convert_collection_to_tuple(cls, collection: Catchments_Collection) -> Tuple['Catchment']:
+    def _convert_collection_to_tuple(cls, collection: Catchments_Collection) -> Tuple['Catchment', ...]:
         """
         Convenience method to accept a ``Catchments_Collection``, which is a union of several possible types, and to
         output a tuple of catchments (or an empty tuple).
@@ -43,7 +43,7 @@ class Catchment:
 
         Returns
         -------
-        Tuple['Catchment']
+        Tuple['Catchment', ...]
             A tuple containing the catchments included directly or in the container parameter object.
         """
         if isinstance(collection, list):
@@ -101,24 +101,24 @@ class Catchment:
         self._realization = realization
 
     @property
-    def conjoined_catchments(self) -> Tuple['Catchment']:
+    def conjoined_catchments(self) -> Tuple['Catchment', ...]:
         """
 
         Returns
         -------
-        Tuple['Catchment']
+        Tuple['Catchment', ...]
             Tuple of catchment objects in a conjoined relationship with this object.
         """
         return self._conjoined_catchments
 
     @property
-    def contained_catchments(self) -> Tuple['Catchment']:
+    def contained_catchments(self) -> Tuple['Catchment', ...]:
         """
         Tuple of catchment object having an "is-in" relationship with this catchment object.
 
         Returns
         -------
-        Tuple[Catchment]
+        Tuple[Catchment, ...]
             Tuple of catchment object having an "is-in" relationship with this catchment object.
         """
         return self._contained_catchments
@@ -159,7 +159,7 @@ class Catchment:
         return self._inflow
 
     @property
-    def lower_catchments(self) -> Tuple['Catchment']:
+    def lower_catchments(self) -> Tuple['Catchment', ...]:
         """
         The collection of neighboring catchments immediately below this one in the catchment network.
 
@@ -167,7 +167,7 @@ class Catchment:
 
         Returns
         -------
-        Tuple['Catchment']
+        Tuple['Catchment', ...]
             The collection of neighboring catchments immediately below this one in the catchment network.
         """
         # TODO: reconcile this with Nexus class once finished.
@@ -202,7 +202,7 @@ class Catchment:
         self._realization = realization
 
     @property
-    def upper_catchments(self) -> Tuple['Catchment']:
+    def upper_catchments(self) -> Tuple['Catchment', ...]:
         """
         The collection of neighboring catchments immediately above this one in the catchment network.
 
@@ -210,7 +210,7 @@ class Catchment:
 
         Returns
         -------
-        Tuple['Catchment']
+        Tuple['Catchment', ...]
             The collection of neighboring catchments immediately above this one in the catchment network.
         """
         # TODO: reconcile this with Nexus class once finished.
