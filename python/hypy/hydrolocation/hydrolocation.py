@@ -52,7 +52,7 @@ class HydroLocation:
 
         Parameters
         ----------
-        shape: Union[Point, Tuple]
+        shape: Point | Tuple
             a shapely point geometry or two-tuple defining the coordinates of this location
         type: HydroLocationType
             enum value defining the type of feature at this location
