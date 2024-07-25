@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import Enum, auto
 from typing import TYPE_CHECKING, Tuple, Union
 
 if TYPE_CHECKING:
@@ -8,31 +8,31 @@ class HydroLocationType(Enum):
     """
         Enumeration of hydro location types
     """
-    UNDEFINED = ()
-    barrage = ()
-    bifurcation = ()
-    catchmentOutlet = ()
-    confluence = ()
-    dam = ()
-    diversionOfWater = ()
-    extractionWell = ()
-    fork = ()
-    hydrometricStation = ()
-    infiltrationWell = ()
-    injectionWell = ()
-    inletStructure = ()
-    intake = ()
-    outletStructure = ()
-    ponor = ()
-    pourPoint = ()
-    rapids = ()
-    refenceClimatologicalStation = ()
-    riverMouth = ()
-    sinkhole = ()
-    source = ()
-    spring = ()
-    waterfall = ()
-    weir = ()
+    UNDEFINED = auto()
+    barrage = auto()
+    bifurcation = auto()
+    catchmentOutlet = auto()
+    confluence = auto()
+    dam = auto()
+    diversionOfWater = auto()
+    extractionWell = auto()
+    fork = auto()
+    hydrometricStation = auto()
+    infiltrationWell = auto()
+    injectionWell = auto()
+    inletStructure = auto()
+    intake = auto()
+    outletStructure = auto()
+    ponor = auto()
+    pourPoint = auto()
+    rapids = auto()
+    refenceClimatologicalStation = auto()
+    riverMouth = auto()
+    sinkhole = auto()
+    source = auto()
+    spring = auto()
+    waterfall = auto()
+    weir = auto()
 
 class HydroLocation():
     """
