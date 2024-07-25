@@ -36,11 +36,11 @@ class HydroLocationType(Enum):
     waterfall = auto()
     weir = auto()
 
-class HydroLocation():
+class HydroLocation:
     """
         Implementation of the HY Features HydroLocation concept
     """
-    __slots__ = ['_shape', '_type', '_referenced_position', '_realized_nexus']
+    __slots__ = ('_shape', '_type', '_referenced_position', '_realized_nexus')
 
     def __init__(self,
                 realized_nexus: str,
