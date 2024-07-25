@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from enum import Enum, auto
-from typing import TYPE_CHECKING, Tuple, Union
+from typing import TYPE_CHECKING, Tuple
 
 if TYPE_CHECKING:
     from shapely.geometry import Point
@@ -42,7 +44,7 @@ class HydroLocation():
 
     def __init__(self,
                 realized_nexus: str,
-                shape: Union['Point', Tuple] = None,
+                shape: Point | Tuple = None,
                 type: HydroLocationType = HydroLocationType.UNDEFINED,
                 referenced_position = None, #TODO implement indirect position?
                 ):
@@ -72,7 +74,7 @@ class HydroLocation():
         return self._realized_nexus
 
     @property
-    def geometry(self) -> Union['Point', Tuple]:
+    def geometry(self) -> Point | Tuple:
         """
             Geometric coordinates of the location as a `Point` or two-Tuple
         """
