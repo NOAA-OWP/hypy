@@ -4,19 +4,6 @@ from typing import TYPE_CHECKING, Tuple, Union
 if TYPE_CHECKING:
     from shapely.geometry import Point
 
-class AutoEnum(Enum):
-    """
-        Helper class to automatically number enumeration values
-        based on the number of enum members
-    """
-    def __new__(cls):
-        """
-            Overide the new () operator to return the number of members +1
-        """
-        obj = object.__new__(cls)
-        obj._value_ = len(cls.__members__) + 1
-        return obj
-
 class HydroLocationType(Enum):
     """
         Enumeration of hydro location types
