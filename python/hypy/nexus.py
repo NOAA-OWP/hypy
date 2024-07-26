@@ -7,32 +7,7 @@ class Nexus():
     """
     Implementation of the HY Features Nexus concept.
     """
-
-    @classmethod
-    def _convert_collection_to_tuple(cls, collection: 'Catchments_Collection') -> Tuple['Catchment', ...]:
-        """
-        Convenience method to accept a ``Catchments_Collection``, which is a union of several possible types, and to
-        output a tuple of catchments (or an empty tuple).
-        Parameters
-        ----------
-        collection: Catchments_Collection
-            A collection of catchment objects, which could be objects within certain containers, an empty container, or
-            a single catchment object itself.
-        Returns
-        -------
-        Tuple['Catchment', ...]
-            A tuple containing the catchments included directly or in the container parameter object.
-        """
-        if isinstance(collection, list):
-            return tuple(collection)
-        elif isinstance(collection, tuple):
-            return collection
-        # Assuming type hinting is followed, the only thing this should leave is the single catchment
-        # TODO: consider whether any cases outside of type hint need to be addressed
-        else:
-            return (collection,)
-
-    __slots__ = ["_id", "_receiving_catchments", "_contributing_catchments", "_hydro_location"]
+    __slots__ = ("_id", "_receiving_catchments", "_contributing_catchments", "_hydro_location")
 
     def __init__(self, 
                  nexus_id: str, 
@@ -89,3 +64,29 @@ class Nexus():
             Tuple of Catchment object(s) contributing water to nexus
         """
         return self._contributing_catchments 
+
+    @staticmethod
+    def _convert_collection_to_tuple(collection: Catchments_Collection) -> tuple[Catchment, ...]:
+        """
+        Convenience method to accept a ``Catchments_Collection``, which is a union of several possible types, and to
+        output a tuple of catchments (or an empty tuple).
+        Parameters
+        ----------
+        collection: Catchments_Collection
+            A collection of catchment objects, which could be objects within certain containers, an empty container, or
+            a single catchment object itself.
+        Returns
+        -------
+        tuple[Catchment, ...]
+            A tuple containing the catchments included directly or in the container parameter object.
+        """
+        # avoid circular import
+        from .catchment import Catchment
+        if isinstance(collection, list):
+            return tuple(collection)
+        elif isinstance(collection, tuple):
+            return collection
+        elif isinstance(collection, Catchment):
+            return (collection,)
+        else:
+            raise AssertionError("unreachable")
