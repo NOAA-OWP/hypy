@@ -1,7 +1,10 @@
-from typing import List, Optional, Tuple, TYPE_CHECKING, Union
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from .catchment import Catchment, Catchments_Collection
+    from .hydrolocation.hydrolocation import HydroLocation
 
 class Nexus():
     """
@@ -11,9 +14,9 @@ class Nexus():
 
     def __init__(self, 
                  nexus_id: str, 
-                 hydro_location,
-                 receiving_catchments: 'Catchments_Collection' = tuple(),
-                 contributing_catchments: 'Catchments_Collection' = tuple()):   
+                 hydro_location: HydroLocation,
+                 receiving_catchments: Catchments_Collection = tuple(),
+                 contributing_catchments: Catchments_Collection = tuple()):
         """
         Set the nexus identity and params
         
@@ -44,7 +47,7 @@ class Nexus():
         return self._id
 
     @property
-    def receiving_catchments (self) -> Tuple['Catchment', ...]:
+    def receiving_catchments (self) -> tuple[Catchment, ...]:
         """Tuple of Catchment object(s) receiving water from nexus
 
         Returns
@@ -55,7 +58,7 @@ class Nexus():
         return self._receiving_catchments 
 
     @property
-    def contributing_catchments (self) -> Tuple['Catchment', ...]:
+    def contributing_catchments (self) -> tuple[Catchment, ...]:
         """Tuple of Catchment object(s) contributing water to nexus
 
         Returns

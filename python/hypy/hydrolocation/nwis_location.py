@@ -1,4 +1,6 @@
-from typing import Union, Tuple, TYPE_CHECKING
+from __future__ import annotations
+
+from typing import Tuple, TYPE_CHECKING
 from hydrotools import nwis_client
 
 from hypy.hydrolocation import HydroLocation, HydroLocationType
@@ -15,7 +17,7 @@ class NWISLocation(HydroLocation):
     def __init__(self,
                 station_id: str,
                 realized_nexus: str,
-                shape: Union['Point', Tuple] = None,
+                shape: Point | Tuple = None,
                 referenced_position = None, #TODO implement indirect position?
                 ):
         """
@@ -42,9 +44,9 @@ class NWISLocation(HydroLocation):
         return self._station_id
 
     def get_data(self,
-                 start: Union[ str, 'datetime', 'datetime64', 'Timestamp', None ] = None,
-                 end: Union[ str, 'datetime', 'datetime64', 'Timestamp', None ] = None
-                 ) -> 'DataFrame':
+                 start: str | datetime | datetime64 | Timestamp | None = None,
+                 end: str | datetime | datetime64 | Timestamp | None = None
+                 ) -> DataFrame:
         """
             Get observation data from nwis
         """
