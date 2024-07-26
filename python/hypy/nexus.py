@@ -6,7 +6,7 @@ if TYPE_CHECKING:
     from .catchment import Catchment, Catchments_Collection
     from .hydrolocation.hydrolocation import HydroLocation
 
-class Nexus():
+class Nexus:
     """
     Implementation of the HY Features Nexus concept.
     """

@@ -10,10 +10,13 @@ if TYPE_CHECKING:
     from numpy import datetime64
     from datetime import datetime
     from shapely.geometry import Point
+
 class NWISLocation(HydroLocation):
     """
     An NWIS subclass of HydroLocation
     """
+    __slots__ = ("_station_id",)
+
     def __init__(self,
                 station_id: str,
                 realized_nexus: str,
