@@ -76,7 +76,7 @@ class HydroLocation:
     @property
     def geometry(self) -> Point | tuple[float, float]:
         """
-            Geometric coordinates of the location as a `Point` or two-Tuple
+        Geodetic coordinates of the location as a `Point` or tuple of two floats
         """
         return self._shape
 

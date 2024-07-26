@@ -24,6 +24,8 @@ class Nexus():
         ----------
         nexus_id: str
             The identifier string for this nexus
+        hydro_location: HydroLocation
+            HydroLocation associated with this nexus
         receiving_catchments: Catchments_Collection
             The catchment object(s) that receive(s) water from this nexus
         contributing_catchments: Catchments_Collection
@@ -52,7 +54,7 @@ class Nexus():
 
         Returns
         -------
-        Tuple['Catchment', ...]
+        tuple[Catchment, ...]
             Tuple of Catchment object(s) receiving water from nexus 
         """
         return self._receiving_catchments 
@@ -63,7 +65,7 @@ class Nexus():
 
         Returns
         -------
-        Tuple['Catchment', ...]
+        tuple[Catchment, ...]
             Tuple of Catchment object(s) contributing water to nexus
         """
         return self._contributing_catchments 
