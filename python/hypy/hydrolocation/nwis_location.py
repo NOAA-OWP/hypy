@@ -12,7 +12,7 @@ if TYPE_CHECKING:
     from shapely.geometry import Point
 class NWISLocation(HydroLocation):
     """
-        An NWIS subclass of HydroLocation
+    An NWIS subclass of HydroLocation
     """
     def __init__(self,
                 station_id: str,
@@ -24,7 +24,7 @@ class NWISLocation(HydroLocation):
 
         Parameters
         ----------
-        shape: Union[Point, Tuple]
+        shape: Point | Tuple
             a shapely point geometry or two-tuple defining the coordinates of this location
         station_id: str
             NWIS station identifier 
@@ -35,11 +35,11 @@ class NWISLocation(HydroLocation):
         """
         super().__init__(realized_nexus, shape, HydroLocationType.hydrometricStation, referenced_position)
         self._station_id = station_id
-        #self._nwis = nwis_client.IVDataService()
+
     @property
     def station_id(self) -> str:
         """
-            NWIS station identifier
+        NWIS station identifier
         """
         return self._station_id
 
@@ -48,6 +48,6 @@ class NWISLocation(HydroLocation):
                  end: str | datetime | datetime64 | Timestamp | None = None
                  ) -> DataFrame:
         """
-            Get observation data from nwis
+        Get observation data from NWIS
         """
         return nwis_client.IVDataService().get(self._station_id, startDT=start, endDT=end)
