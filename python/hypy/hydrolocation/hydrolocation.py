@@ -74,7 +74,7 @@ class HydroLocation:
         return self._realized_nexus
 
     @property
-    def geometry(self) -> Point | Tuple:
+    def geometry(self) -> Point | tuple[float, float]:
         """
             Geometric coordinates of the location as a `Point` or two-Tuple
         """
