@@ -35,7 +35,7 @@ pip install -r python/requirements.txt
 ```
 Then use `pytest` to run the tests:
 
-`pytest --log-cli-level 0 python/hypy/test/`
+`pytest --log-cli-level 0 python/test/`
 
 Also, the following check commands can be run locally to perform code analysis.  PRs have these or similar checks run automatically (see the Github Actions [config file](.github/workflows/python-package.yml)).
 
